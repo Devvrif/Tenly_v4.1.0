@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "ESNext",              // Use modern module syntax
+    "moduleResolution": "node",      // Resolves modules like Node.js
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,                  // Keep noEmit true if you're using ts-node or Vercel TS support
+    "jsx": "react-jsx"               // React JSX support (needed for React 17+)
+  },
+  "include": [
+    "src",                           // Include your source code
+    "api"                            // Include your API folder (if separate)
+  ],
+  "typeRoots": [
+    "node_modules/@types"            // Ensure TypeScript looks here for type definitions
+  ],
+  "types": [
+    "node"                           // Add 'node' type for global node types
+  ]
+}
