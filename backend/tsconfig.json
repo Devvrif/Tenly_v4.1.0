@@ -3,11 +3,12 @@
     "target": "ES2019",
     "module": "commonjs",
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "./",  // Root directory is now the backend directory
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "include": ["src"]
+  "include": ["server.ts"],  // Include the server.ts file directly
+  "exclude": ["node_modules"]  // Exclude node_modules
 }
