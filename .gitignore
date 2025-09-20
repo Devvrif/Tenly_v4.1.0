@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 node_modules/
 .env.local
 .env
@@ -30,6 +31,8 @@ yarn-error.log*
 
 .vercel
 
+=======
+>>>>>>> 89e56c2b35710045607af5f03e03ab85c9ba3e76
 # Logs
 logs
 *.log
