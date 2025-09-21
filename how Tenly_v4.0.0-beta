@@ -1,0 +1,180 @@
+[33mtag Tenly_v4.0.0-beta[m
+Tagger: Devvrif <mamailbox23@gmail.com>
+Date:   Sun Sep 21 17:24:07 2025 +0530
+
+Beta version for Tenly 4.0
+
+[33mcommit 41e8eb7cc826ce22b05aee6103eeeaea7c791e6c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;33mtag: [m[1;33mTenly_v4.0.0-beta[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Devvrif <mamailbox23@gmail.com>
+Date:   Sun Sep 21 17:23:36 2025 +0530
+
+    Prepare for Tenly v4.0.0-beta release
+
+[1mdiff --git a/backend/server.ts b/backend/server.ts[m
+[1mindex 7972e77..67c9507 100644[m
+[1m--- a/backend/server.ts[m
+[1m+++ b/backend/server.ts[m
+[36m@@ -20,12 +20,12 @@[m [mconsole.log('Available env vars:', Object.keys(process.env).filter(key => key.in[m
+ // API route to fetch dynamic news based on user input[m
+ app.get('/api/news', async (req, res) => {[m
+   const { query = 'technology', category = 'technology', country = 'us', language = 'en', imageRequired = true } = req.query;[m
+[31m-  [m
+[32m+[m
+   // Valid NewsData.io categories[m
+   const validCategories = ['business', 'entertainment', 'environment', 'food', 'health', 'politics', 'science', 'sports', 'technology', 'top', 'world'];[m
+   const validCountries = ['us', 'gb', 'ca', 'au', 'in', 'de', 'fr', 'it', 'es', 'jp', 'cn', 'ru'];[m
+   const validLanguages = ['en', 'ar', 'de', 'es', 'fr', 'he', 'it', 'nl', 'no', 'pt', 'ru', 'sv', 'zh'];[m
+[31m-  [m
+[32m+[m
+   // Validate and fix parameters[m
+   const safeCategory = validCategories.includes(category as string) ? category : 'technology';[m
+   const safeCountry = validCountries.includes(country as string) ? country : 'us';[m
+[36m@@ -34,7 +34,7 @@[m [mapp.get('/api/news', async (req, res) => {[m
+   try {[m
+     // Check what API keys are available in your .env (matching your variable names)[m
+     const newsDataApiKey = process.env.NEWSDATAAPI_KEY || process.env.NEWSDATA_API_KEY || process.env.NEWS_API_KEY;[m
+[31m-    [m
+[32m+[m
+     console.log('🔑 Looking for API keys...');[m
+     console.log('NEWSDATAAPI_KEY exists:', !!process.env.NEWSDATAAPI_KEY);[m
+     console.log('NEWSDATA_API_KEY exists:', !!process.env.NEWSDATA_API_KEY);[m
+[36m@@ -42,7 +42,7 @@[m [mapp.get('/api/news', async (req, res) => {[m
+ [m
+     if (!newsDataApiKey) {[m
+       console.error('❌ No NewsData API key found. Check your .env file.');[m
+[31m-      return res.status(500).json({ [m
+[32m+[m[32m      return res.status(500).json({[m
+         message: 'API key is missing from environment variables.',[m
+         debug: 'Make sure you have NEWSDATA_API_KEY in your .env file'[m
+       });[m
+[36m@@ -53,7 +53,7 @@[m [mapp.get('/api/news', async (req, res) => {[m
+ [m
+     // Fixed NewsData.io API call with valid parameters[m
+     const newsDataUrl = `https://newsdata.io/api/1/latest?apikey=${newsDataApiKey}&q=${query}&category=${safeCategory}&country=${safeCountry}&language=${safeLanguage}&image=${imageRequired ? 1 : 0}&size=10`;[m
+[31m-    [m
+[32m+[m
+     console.log('🌐 Requesting:', newsDataUrl.replace(newsDataApiKey, '***API_KEY***'));[m
+ [m
+     const newsDataIOResponse = await axios.get(newsDataUrl);[m
+[36m@@ -63,7 +63,7 @@[m [mapp.get('/api/news', async (req, res) => {[m
+ [m
+     // For now, let's just use NewsData.io and comment out other APIs[m
+     // until we get this working first[m
+[31m-    [m
+[32m+[m
+     /*[m
+     // OTHER NEWS APIs - Uncomment when you have their API keys[m
+     const newsAPIKey = process.env.NEWSAPI_KEY;[m
+[36m@@ -92,13 +92,14 @@[m [mapp.get('/api/news', async (req, res) => {[m
+     */[m
+ [m
+     // For now, just return NewsData.io articles in a consistent format[m
+[32m+[m[32m    // Replace the mapping section with this:[m
+     const combinedNews = newsDataIOArticles.map((article: any) => ({[m
+       title: article.title,[m
+       description: article.description,[m
+[31m-      url: article.link, // NewsData.io uses 'link', not 'url'[m
+[31m-      source: article.source_id || 'NewsData.io',[m
+[31m-      image: article.image_url || null, // NewsData.io uses 'image_url'[m
+[31m-      publishedAt: article.pubDate,[m
+[32m+[m[32m      url: article.link, // Map link to url[m
+[32m+[m[32m      source: { name: article.source_id || 'NewsData.io' }, // Map to expected format[m
+[32m+[m[32m      image: article.image_url || null, // Map image_url to image[m
+[32m+[m[32m      publishedAt: article.pubDate, // Map pubDate to publishedAt[m
+       category: article.category?.[0] || category,[m
+     }));[m
+ [m
+[36m@@ -117,8 +118,8 @@[m [mapp.get('/api/news', async (req, res) => {[m
+   } catch (error: any) {[m
+     console.error('❌ Error fetching news:', error.message);[m
+     console.error('Full error:', error.response?.data || error);[m
+[31m-    [m
+[31m-    res.status(500).json({ [m
+[32m+[m
+[32m+[m[32m    res.status(500).json({[m
+       message: 'Failed to fetch news',[m
+       error: error.message,[m
+       debug: 'Check server logs for details'[m
+[36m@@ -128,8 +129,8 @@[m [mapp.get('/api/news', async (req, res) => {[m
+ [m
+ // Health check endpoint[m
+ app.get('/api/health', (req, res) => {[m
+[31m-  res.json({ [m
+[31m-    status: 'OK', [m
+[32m+[m[32m  res.json({[m
+[32m+[m[32m    status: 'OK',[m
+     timestamp: new Date().toISOString(),[m
+     env_loaded: !!process.env.NEWSDATA_API_KEY || !!process.env.NEWS_API_KEY[m
+   });[m
+[1mdiff --git a/package-lock.json b/package-lock.json[m
+[1mindex f83141f..40ea5b2 100644[m
+[1m--- a/package-lock.json[m
+[1m+++ b/package-lock.json[m
+[36m@@ -22,6 +22,7 @@[m
+         "cors": "^2.8.5",[m
+         "dotenv": "^17.2.2",[m
+         "express": "^5.1.0",[m
+[32m+[m[32m        "lucide-react": "^0.544.0",[m
+         "node-fetch": "^3.3.2",[m
+         "react": "^18.3.1",[m
+         "react-dom": "^18.3.1",[m
+[36m@@ -12360,6 +12361,15 @@[m
+         "yallist": "^3.0.2"[m
+       }[m
+     },[m
+[32m+[m[32m    "node_modules/lucide-react": {[m
+[32m+[m[32m      "version": "0.544.0",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/lucide-react/-/lucide-react-0.544.0.tgz",[m
+[32m+[m[32m      "integrity": "sha512-t5tS44bqd825zAW45UQxpG2CvcC4urOwn2TrwSH8u+MjeE+1NnWl6QqeQ/6NdjMqdOygyiT9p3Ev0p1NJykxjw==",[m
+[32m+[m[32m      "license": "ISC",[m
+[32m+[m[32m      "peerDependencies": {[m
+[32m+[m[32m        "react": "^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0"[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+     "node_modules/lz-string": {[m
+       "version": "1.5.0",[m
+       "resolved": "https://registry.npmjs.org/lz-string/-/lz-string-1.5.0.tgz",[m
+[1mdiff --git a/package.json b/package.json[m
+[1mindex 41b28fb..e1530b5 100644[m
+[1m--- a/package.json[m
+[1m+++ b/package.json[m
+[36m@@ -19,6 +19,7 @@[m
+     "cors": "^2.8.5",[m
+     "dotenv": "^17.2.2",[m
+     "express": "^5.1.0",[m
+[32m+[m[32m    "lucide-react": "^0.544.0",[m
+     "node-fetch": "^3.3.2",[m
+     "react": "^18.3.1",[m
+     "react-dom": "^18.3.1",[m
+[1mdiff --git a/src/App.tsx b/src/App.tsx[m
+[1mindex 08a7eec..1012f9c 100644[m
+[1m--- a/src/App.tsx[m
+[1m+++ b/src/App.tsx[m
+[36m@@ -1,108 +1,102 @@[m
+[31m-import React, { useState, useEffect } from 'react';[m
+[32m+[m[32mimport React, { useState, useEffect, useCallback } from 'react';[m
+[32m+[m[32mimport Header from './components/Header';[m
+[32m+[m[32mimport NewsCard from './components/NewsCard';[m
+[32m+[m[32mimport Footer from './components/Footer';[m
+[32m+[m[32mimport { Article } from './types';[m
+ [m
+[31m-interface Article {[m
+[31m-  title: string;[m
+[31m-  description: string;[m
+[31m-  url: string;[m
+[31m-  source: { name: string };[m
+[31m-  image: string | null;[m
+[31m-  publishedAt: string;[m
+[31m-}[m
+[31m-[m
+[31m-interface Filters {[m
+[31m-  country: string;[m
+[31m-  language: string;[m
+[31m-  category: string;[m
+[31m-  query: string;[m
+[31m-}[m
+[32m+[m[32m// Environment configuration[m
+[32m+[m[32mconst API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000';[m
+ [m
+ const App: React.FC = () => {[m
+   const [news, setNews] = useState<A
