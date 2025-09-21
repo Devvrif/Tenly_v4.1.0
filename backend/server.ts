@@ -20,12 +20,12 @@ console.log('Available env vars:', Object.keys(process.env).filter(key => key.in
 // API route to fetch dynamic news based on user input
 app.get('/api/news', async (req, res) => {
   const { query = 'technology', category = 'technology', country = 'us', language = 'en', imageRequired = true } = req.query;
-  
+
   // Valid NewsData.io categories
   const validCategories = ['business', 'entertainment', 'environment', 'food', 'health', 'politics', 'science', 'sports', 'technology', 'top', 'world'];
   const validCountries = ['us', 'gb', 'ca', 'au', 'in', 'de', 'fr', 'it', 'es', 'jp', 'cn', 'ru'];
   const validLanguages = ['en', 'ar', 'de', 'es', 'fr', 'he', 'it', 'nl', 'no', 'pt', 'ru', 'sv', 'zh'];
-  
+
   // Validate and fix parameters
   const safeCategory = validCategories.includes(category as string) ? category : 'technology';
   const safeCountry = validCountries.includes(country as string) ? country : 'us';
@@ -34,7 +34,7 @@ app.get('/api/news', async (req, res) => {
   try {
     // Check what API keys are available in your .env (matching your variable names)
     const newsDataApiKey = process.env.NEWSDATAAPI_KEY || process.env.NEWSDATA_API_KEY || process.env.NEWS_API_KEY;
-    
+
     console.log('🔑 Looking for API keys...');
     console.log('NEWSDATAAPI_KEY exists:', !!process.env.NEWSDATAAPI_KEY);
     console.log('NEWSDATA_API_KEY exists:', !!process.env.NEWSDATA_API_KEY);
@@ -42,7 +42,7 @@ app.get('/api/news', async (req, res) => {
 
     if (!newsDataApiKey) {
       console.error('❌ No NewsData API key found. Check your .env file.');
-      return res.status(500).json({ 
+      return res.status(500).json({
         message: 'API key is missing from environment variables.',
         debug: 'Make sure you have NEWSDATA_API_KEY in your .env file'
       });
@@ -53,7 +53,7 @@ app.get('/api/news', async (req, res) => {
 
     // Fixed NewsData.io API call with valid parameters
     const newsDataUrl = `https://newsdata.io/api/1/latest?apikey=${newsDataApiKey}&q=${query}&category=${safeCategory}&country=${safeCountry}&language=${safeLanguage}&image=${imageRequired ? 1 : 0}&size=10`;
-    
+
     console.log('🌐 Requesting:', newsDataUrl.replace(newsDataApiKey, '***API_KEY***'));
 
     const newsDataIOResponse = await axios.get(newsDataUrl);
@@ -63,7 +63,7 @@ app.get('/api/news', async (req, res) => {
 
     // For now, let's just use NewsData.io and comment out other APIs
     // until we get this working first
-    
+
     /*
     // OTHER NEWS APIs - Uncomment when you have their API keys
     const newsAPIKey = process.env.NEWSAPI_KEY;
@@ -92,13 +92,14 @@ app.get('/api/news', async (req, res) => {
     */
 
     // For now, just return NewsData.io articles in a consistent format
+    // Replace the mapping section with this:
     const combinedNews = newsDataIOArticles.map((article: any) => ({
       title: article.title,
       description: article.description,
-      url: article.link, // NewsData.io uses 'link', not 'url'
-      source: article.source_id || 'NewsData.io',
-      image: article.image_url || null, // NewsData.io uses 'image_url'
-      publishedAt: article.pubDate,
+      url: article.link, // Map link to url
+      source: { name: article.source_id || 'NewsData.io' }, // Map to expected format
+      image: article.image_url || null, // Map image_url to image
+      publishedAt: article.pubDate, // Map pubDate to publishedAt
       category: article.category?.[0] || category,
     }));
 
@@ -117,8 +118,8 @@ app.get('/api/news', async (req, res) => {
   } catch (error: any) {
     console.error('❌ Error fetching news:', error.message);
     console.error('Full error:', error.response?.data || error);
-    
-    res.status(500).json({ 
+
+    res.status(500).json({
       message: 'Failed to fetch news',
       error: error.message,
       debug: 'Check server logs for details'
@@ -128,8 +129,8 @@ app.get('/api/news', async (req, res) => {
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'OK', 
+  res.json({
+    status: 'OK',
     timestamp: new Date().toISOString(),
     env_loaded: !!process.env.NEWSDATA_API_KEY || !!process.env.NEWS_API_KEY
   });

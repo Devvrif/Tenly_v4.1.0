@@ -1,5 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}", // 👈 tells Tailwind where to look
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -10,16 +13,8 @@ module.exports = {
       },
     },
   },
-  plugins: [],
-};
-
-// tailwind.config.js
-module.exports = {
-  // your existing config ...
   plugins: [
-    require('@tailwindcss/line-clamp'),
-    // other plugins if any
+    // ⚠️ Remove this if you're on Tailwind v3.3+ (built-in already)
+    // require('@tailwindcss/line-clamp'),
   ],
-}
-
-
+};
