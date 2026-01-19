@@ -5,7 +5,8 @@ import dotenv from 'dotenv';
 import path from 'path';
 
 // Load .env file explicitly
-dotenv.config({ path: '../.env' });
+// dotenv.config({ path: '../.env' });
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
 

@@ -45,7 +45,6 @@ const Footer: React.FC = () => {
               gap: '1rem',
               marginBottom: '1.5rem'
             }}>
-              {/* Footer Logo */}
               <div style={{
                 width: '50px',
                 height: '50px',
@@ -168,14 +167,17 @@ const Footer: React.FC = () => {
                 'Science'
               ].map((item, index) => (
                 <li key={index} style={{ marginBottom: '0.75rem' }}>
-                  <a
-                    href="#"
+                  <button
                     style={{
                       color: '#94a3b8',
                       textDecoration: 'none',
                       transition: 'color 0.3s ease',
                       fontSize: '0.9rem',
-                      fontWeight: '500'
+                      fontWeight: '500',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: 0
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.color = '#e94560';
@@ -185,7 +187,7 @@ const Footer: React.FC = () => {
                     }}
                   >
                     {item}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -218,14 +220,17 @@ const Footer: React.FC = () => {
                 'Partnerships'
               ].map((item, index) => (
                 <li key={index} style={{ marginBottom: '0.75rem' }}>
-                  <a
-                    href="#"
+                  <button
                     style={{
                       color: '#94a3b8',
                       textDecoration: 'none',
                       transition: 'color 0.3s ease',
                       fontSize: '0.9rem',
-                      fontWeight: '500'
+                      fontWeight: '500',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: 0
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.color = '#e94560';
@@ -235,7 +240,7 @@ const Footer: React.FC = () => {
                     }}
                   >
                     {item}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -266,14 +271,17 @@ const Footer: React.FC = () => {
                 'Report Issue'
               ].map((item, index) => (
                 <li key={index} style={{ marginBottom: '0.75rem' }}>
-                  <a
-                    href="#"
+                  <button
                     style={{
                       color: '#94a3b8',
                       textDecoration: 'none',
                       transition: 'color 0.3s ease',
                       fontSize: '0.9rem',
-                      fontWeight: '500'
+                      fontWeight: '500',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: 0
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.color = '#e94560';
@@ -283,7 +291,7 @@ const Footer: React.FC = () => {
                     }}
                   >
                     {item}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -310,9 +318,8 @@ const Footer: React.FC = () => {
                 { name: 'Instagram', icon: 'M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z' },
                 { name: 'YouTube', icon: 'M23.498 6.186a2.978 2.978 0 0 0-2.096-2.107C19.567 3.65 12 3.65 12 3.65s-7.567 0-9.402.429A2.978 2.978 0 0 0 .502 6.186C.073 8.022.073 12 .073 12s0 3.978.429 5.814a2.978 2.978 0 0 0 2.096 2.107C4.433 20.35 12 20.35 12 20.35s7.567 0 9.402-.429a2.978 2.978 0 0 0 2.096-2.107C23.927 15.978 23.927 12 23.927 12s0-3.978-.429-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z' }
               ].map((social, index) => (
-                <a
+                <button
                   key={index}
-                  href="#"
                   style={{
                     width: '44px',
                     height: '44px',
@@ -323,7 +330,10 @@ const Footer: React.FC = () => {
                     justifyContent: 'center',
                     color: '#94a3b8',
                     textDecoration: 'none',
-                    transition: 'all 0.3s ease'
+                    transition: 'all 0.3s ease',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: 0
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = '#e94560';
@@ -338,67 +348,21 @@ const Footer: React.FC = () => {
                   aria-label={social.name}
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d={social.icon}/>
+                    <path d={social.icon} />
                   </svg>
-                </a>
+                </button>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Bottom Section */}
-        <div style={{
+        <p style={{
           textAlign: 'center',
-          paddingTop: '2rem',
-          borderTop: '1px solid rgba(148, 163, 184, 0.1)',
           color: '#64748b',
-          fontSize: '0.9rem'
+          fontSize: '0.85rem'
         }}>
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '1rem'
-          }}>
-            <p style={{ margin: 0 }}>
-              © 2025 Tenly. All rights reserved. | Powered by AI-driven journalism for the modern world.
-            </p>
-            
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem',
-              fontSize: '0.8rem'
-            }}>
-              <span style={{ color: '#94a3b8' }}>Made with</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#e94560">
-                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-              </svg>
-              <span style={{ color: '#94a3b8' }}>for news enthusiasts</span>
-            </div>
-          </div>
-          
-          {/* Additional Info */}
-          <div style={{
-            marginTop: '1.5rem',
-            padding: '1rem',
-            background: 'rgba(233, 69, 96, 0.05)',
-            borderRadius: '12px',
-            border: '1px solid rgba(233, 69, 96, 0.1)'
-          }}>
-            <p style={{
-              margin: 0,
-              fontSize: '0.85rem',
-              color: '#94a3b8',
-              lineHeight: '1.6'
-            }}>
-              <strong style={{ color: '#e94560' }}>Disclaimer:</strong> Tenly aggregates news from various sources and uses AI to enhance readability and categorization. 
-              We strive for accuracy but recommend verifying important information with original sources. 
-              All article content remains property of respective publishers.
-            </p>
-          </div>
-        </div>
+          © 2026 Tenly. All rights reserved.
+        </p>
       </div>
     </footer>
   );
