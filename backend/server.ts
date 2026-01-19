@@ -143,3 +143,5 @@ app.listen(PORT, () => {
   console.log(`🔗 Health check: http://localhost:${PORT}/api/health`);
   console.log(`🔗 News API: http://localhost:${PORT}/api/news?query=technology`);
 });
+
+export default app;
